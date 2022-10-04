@@ -1,9 +1,9 @@
 package org.example;
 
-import org.example.stuff.DTOWith5PublicFields;
-import org.example.stuff.more.DTOWithoutEmptyConstructor;
-import org.example.stuff.more.deep.G;
-import org.example.stuff.other.DTOWithOverriddenNameAndOverridenFieldName;
+import org.example.stuff.otherStuff.DTOWith5PublicFields;
+import org.example.stuff.otherStuff.more.DTOWithoutEmptyConstructor;
+import org.example.stuff.otherStuff.more.deep.G;
+import org.example.stuff.otherStuff.other.DTOWithOverriddenNameAndOverridenFieldName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -17,7 +17,7 @@ public class DTOMapperUnitTests {
     {
         var om = DTOMapper
                 .builder()
-                .scanPackageForObjects("org.example.stuff")
+                .scanPackageForObjects("org.example.stuff.otherStuff")
                 .build();
 
         var allAnnotatedClasses = om.allAnnotatedClasses();

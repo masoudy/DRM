@@ -1,4 +1,4 @@
-package org.example.stuff.more;
+package org.example.stuff.otherStuff.more;
 
 import org.example.DTO;
 

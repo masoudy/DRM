@@ -1,9 +1,9 @@
 package org.example;
 
-import org.example.stuff.DTOWith5PublicFields;
-import org.example.stuff.B;
-import org.example.stuff.more.DTOWithoutEmptyConstructor;
-import org.example.stuff.other.DTOWithOverriddenNameAndOverridenFieldName;
+import org.example.stuff.otherStuff.DTOWith5PublicFields;
+import org.example.stuff.otherStuff.B;
+import org.example.stuff.otherStuff.more.DTOWithoutEmptyConstructor;
+import org.example.stuff.otherStuff.other.DTOWithOverriddenNameAndOverridenFieldName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;

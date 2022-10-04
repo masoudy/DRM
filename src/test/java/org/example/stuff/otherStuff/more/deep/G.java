@@ -1,4 +1,4 @@
-package org.example.stuff.more.deep;
+package org.example.stuff.otherStuff.more.deep;
 
 import org.example.DTO;
 

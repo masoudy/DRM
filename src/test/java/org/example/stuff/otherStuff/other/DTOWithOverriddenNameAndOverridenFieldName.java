@@ -1,4 +1,4 @@
-package org.example.stuff.other;
+package org.example.stuff.otherStuff.other;
 
 import org.example.AField;
 import org.example.DTO;

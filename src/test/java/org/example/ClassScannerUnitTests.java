@@ -1,12 +1,12 @@
 package org.example;
 
-import org.example.stuff.B;
-import org.example.stuff.DTOWith5PublicFields;
-import org.example.stuff.more.DTOWithoutEmptyConstructor;
-import org.example.stuff.more.F;
-import org.example.stuff.more.deep.G;
-import org.example.stuff.other.D;
-import org.example.stuff.other.DTOWithOverriddenNameAndOverridenFieldName;
+import org.example.stuff.otherStuff.B;
+import org.example.stuff.otherStuff.DTOWith5PublicFields;
+import org.example.stuff.otherStuff.more.DTOWithoutEmptyConstructor;
+import org.example.stuff.otherStuff.more.F;
+import org.example.stuff.otherStuff.more.deep.G;
+import org.example.stuff.otherStuff.other.D;
+import org.example.stuff.otherStuff.other.DTOWithOverriddenNameAndOverridenFieldName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -18,7 +18,7 @@ public class ClassScannerUnitTests {
     @Test
     public void shouldFindAllClassesInsideStuffPackage() {
 
-        var classes = ClassScanner.findAllClassesInsidePackage("org.example.stuff");
+        var classes = ClassScanner.findAllClassesInsidePackage("org.example.stuff.otherStuff");
 
         assertEquals(7,classes.size());
 
