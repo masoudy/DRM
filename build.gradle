@@ -12,6 +12,8 @@ repositories {
 dependencies {
 
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+    implementation group: 'org.json', name: 'json', version: '20220924'
+
 
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'

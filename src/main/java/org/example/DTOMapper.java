@@ -1,5 +1,12 @@
 package org.example;
 
+import org.example.annotation.DTO;
+import org.example.field.DTOFieldDefinition;
+import org.example.field.FieldDefinition;
+import org.example.field.StringFieldDefinition;
+import org.example.util.ClassScanner;
+import org.json.JSONObject;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,6 +16,10 @@ public class DTOMapper {
 
     private DTOMapper(String packageFQN){
         this.packageFQN = packageFQN;
+    }
+
+    public static DTODefinition extractDTODefinitionFor(Class clazz) {
+        return DTODefinitionExtractor.extract(clazz);
     }
 
     public static Builder builder() {
@@ -22,8 +33,18 @@ public class DTOMapper {
                 .collect(Collectors.toSet());
     }
 
+    public JSONObject toJson(Object dto) {
+        var def = extractDTODefinitionFor(dto.getClass());
+        return def.convertCandidateObjectToJson(dto);
+    }
 
-    static class Builder{
+    public <T> T toObject(JSONObject json, Class<T> objectClass) {
+        var def = extractDTODefinitionFor(objectClass);
+        return (T)def.convertCandidateJsonToObject(json);
+    }
+
+
+    public static class Builder{
 
         private String packageFQN;
 

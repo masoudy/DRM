@@ -3,8 +3,10 @@ package org.example.stuff.fieldStuff.field;
 import org.example.annotation.DTO;
 
 @DTO
-public class ContainsDTOField {
+public class ContainsAllKindsOfFields {
 
+    public Long someLongNumber;
+    public String someString;
     public SomeClass someField;
 
 

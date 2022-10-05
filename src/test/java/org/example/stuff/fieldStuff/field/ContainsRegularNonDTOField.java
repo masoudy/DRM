@@ -1,7 +1,6 @@
 package org.example.stuff.fieldStuff.field;
 
-import org.example.AField;
-import org.example.DTO;
+import org.example.annotation.DTO;
 
 @DTO
 public class ContainsRegularNonDTOField {

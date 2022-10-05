@@ -1,5 +1,16 @@
 package org.example;
 
+import org.example.annotation.AField;
+import org.example.annotation.DTO;
+import org.example.exception.ClassWasNotAnnotatedWithAnObject;
+import org.example.exception.DTOCannotHaveNonDTOField;
+import org.example.exception.DTOCannotHaveTwoFieldsWithSameName;
+import org.example.exception.DTOShouldHaveEmptyArgConstructor;
+import org.example.field.DTOFieldDefinition;
+import org.example.field.FieldDefinition;
+import org.example.field.IntegerFieldDefinition;
+import org.example.field.StringFieldDefinition;
+
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -7,8 +18,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class DTODefinitionExtractor {
-    public static DTODefinition extract(Class clazz) {
+class DTODefinitionExtractor {
+    static DTODefinition extract(Class clazz) {
 
         ensureContainingEmptyConstructor(clazz);
 
@@ -30,7 +41,7 @@ public class DTODefinitionExtractor {
 
         checkThatFieldDefsAreNotRepetitive(fieldDefs);
 
-        return new DTODefinition(name,fieldDefs);
+        return new DTODefinition(name,clazz,fieldDefs);
     }
 
     private static void checkThatFieldDefsAreNotRepetitive(Set<FieldDefinition> fieldDefs) {
@@ -67,6 +78,27 @@ public class DTODefinitionExtractor {
         throw new RuntimeException("field definition of type "+fi.getType()+" is not supported!!!");
     }
 
+
+    private static DTOFieldDefinition extractDTOField(Field fi) {
+        String name = extractFieldName(fi);
+        DTODefinition dtoDefinition = extract(fi.getType());
+        return new DTOFieldDefinition(name,fi,dtoDefinition);
+    }
+
+    private static StringFieldDefinition extractStringField(Field fi) {
+        String name = extractFieldName(fi);
+        return new StringFieldDefinition(name,fi);
+    }
+
+    private static IntegerFieldDefinition extractIntegerField(Field fi) {
+
+        if(!fi.getType().equals(Long.TYPE) && !fi.getType().equals(Long.class))
+            throw new RuntimeException("field definition not implemented for "+fi.getType()+" yet!!!");
+
+        String name = extractFieldName(fi);
+        return new IntegerFieldDefinition(name,fi,Long.MIN_VALUE,Long.MAX_VALUE);
+    }
+
     private static boolean isJavaDataType(Field fi) {
         return isStringField(fi) ||
                 isBooleanField(fi)||
@@ -75,11 +107,20 @@ public class DTODefinitionExtractor {
                 isIntegerField(fi);
     }
 
+    private static boolean isDecimalField(Field fi) {
+        Class<?> type = fi.getType();
 
-    private static DTOFieldDefinition extractDTOField(Field fi) {
-        String name = extractFieldName(fi);
-        DTODefinition dtoDefinition = extract(fi.getType());
-        return new DTOFieldDefinition(name,dtoDefinition);
+        return
+                type.equals(Float.TYPE) ||
+                type.equals(Float.class) ||
+                type.equals(Double.TYPE) ||
+                type.equals(Double.class) ||
+                type.equals(BigDecimal.class) ;
+    }
+
+    private static boolean isBooleanField(Field fi) {
+        return fi.getType().equals(Boolean.TYPE)
+                || fi.getType().equals(Boolean.class);
     }
 
     private static boolean isDTOField(Field fi) {
@@ -87,43 +128,24 @@ public class DTODefinitionExtractor {
     }
 
     private static boolean isCharacterField(Field fi) {
-        return fi.getType().equals(Character.class);
-    }
-
-    private static boolean isBooleanField(Field fi) {
-        return fi.getType().equals(Boolean.class);
-    }
-
-    private static boolean isDecimalField(Field fi) {
-        Class<?> type = fi.getType();
-        return type.equals(Float.class) ||
-                type.equals(Double.class) ||
-                type.equals(BigDecimal.class) ;
-    }
-
-    private static StringFieldDefinition extractStringField(Field fi) {
-        String name = extractFieldName(fi);
-        return new StringFieldDefinition(name);
+        return fi.getType().equals(Character.TYPE)
+                || fi.getType().equals(Character.class);
     }
 
     private static boolean isStringField(Field fi) {
         return fi.getType().equals(String.class);
     }
 
-    private static IntegerFieldDefinition extractIntegerField(Field fi) {
-
-        if(fi.getType()!=Long.class)
-            throw new RuntimeException("field definition not implemented for "+fi.getType()+" yet!!!");
-
-        String name = extractFieldName(fi);
-        return new IntegerFieldDefinition(name,Long.MIN_VALUE,Long.MAX_VALUE);
-    }
-
     private static boolean isIntegerField(Field fi) {
         Class<?> type = fi.getType();
-        return type.equals(Integer.class) ||
+        return
+                type.equals(Integer.TYPE) ||
+                type.equals(Integer.class) ||
+                type.equals(Byte.TYPE) ||
                 type.equals(Byte.class) ||
+                type.equals(Short.TYPE) ||
                 type.equals(Short.class) ||
+                type.equals(Long.TYPE) ||
                 type.equals(Long.class) ||
                 type.equals(BigInteger.class);
     }

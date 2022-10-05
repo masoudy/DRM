@@ -1,6 +1,7 @@
-package org.example;
+package org.example.test.unit;
 
-import org.example.stuff.otherStuff.DTOWith5PublicFields;
+import org.example.DTOMapper;
+import org.example.stuff.otherStuff.DTOWith2PublicFields;
 import org.example.stuff.otherStuff.more.DTOWithoutEmptyConstructor;
 import org.example.stuff.otherStuff.more.deep.G;
 import org.example.stuff.otherStuff.other.DTOWithOverriddenNameAndOverridenFieldName;
@@ -26,7 +27,7 @@ public class DTOMapperUnitTests {
 
         assertEquals(
 
-                Set.of(DTOWith5PublicFields.class,
+                Set.of(DTOWith2PublicFields.class,
                         DTOWithOverriddenNameAndOverridenFieldName.class,
                         DTOWithoutEmptyConstructor.class,
                         G.class),
@@ -34,4 +35,10 @@ public class DTOMapperUnitTests {
                 allAnnotatedClasses);
 
     }
+
+  /*  @Test
+    public void shouldBeAbleToConvertADtoObjectIntoJson()
+    {
+
+    }*/
 }

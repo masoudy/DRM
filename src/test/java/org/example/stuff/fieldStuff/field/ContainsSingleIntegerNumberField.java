@@ -1,8 +1,6 @@
 package org.example.stuff.fieldStuff.field;
 
-import org.example.DTO;
-
-import java.math.BigDecimal;
+import org.example.annotation.DTO;
 
 @DTO
 public class ContainsSingleIntegerNumberField {

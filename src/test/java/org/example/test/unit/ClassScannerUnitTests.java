@@ -1,7 +1,8 @@
-package org.example;
+package org.example.test.unit;
 
+import org.example.util.ClassScanner;
 import org.example.stuff.otherStuff.B;
-import org.example.stuff.otherStuff.DTOWith5PublicFields;
+import org.example.stuff.otherStuff.DTOWith2PublicFields;
 import org.example.stuff.otherStuff.more.DTOWithoutEmptyConstructor;
 import org.example.stuff.otherStuff.more.F;
 import org.example.stuff.otherStuff.more.deep.G;
@@ -24,7 +25,7 @@ public class ClassScannerUnitTests {
 
         assertEquals(
 
-                Set.of(DTOWith5PublicFields.class,
+                Set.of(DTOWith2PublicFields.class,
                         B.class, DTOWithOverriddenNameAndOverridenFieldName.class,
                         D.class, DTOWithoutEmptyConstructor.class,
                         F.class,

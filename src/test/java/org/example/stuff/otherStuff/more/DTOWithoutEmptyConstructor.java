@@ -1,6 +1,6 @@
 package org.example.stuff.otherStuff.more;
 
-import org.example.DTO;
+import org.example.annotation.DTO;
 
 @DTO
 public class DTOWithoutEmptyConstructor {

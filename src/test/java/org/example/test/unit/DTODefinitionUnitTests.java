@@ -1,7 +1,11 @@
-package org.example;
+package org.example.test.unit;
 
-import org.example.stuff.otherStuff.DTOWith5PublicFields;
+import org.example.DTOMapper;
+import org.example.exception.ClassWasNotAnnotatedWithAnObject;
+import org.example.exception.DTOShouldHaveEmptyArgConstructor;
+import org.example.field.FieldDefinition;
 import org.example.stuff.otherStuff.B;
+import org.example.stuff.otherStuff.DTOWith2PublicFields;
 import org.example.stuff.otherStuff.more.DTOWithoutEmptyConstructor;
 import org.example.stuff.otherStuff.other.DTOWithOverriddenNameAndOverridenFieldName;
 import org.junit.jupiter.api.Test;
@@ -19,21 +23,21 @@ public class DTODefinitionUnitTests {
     {
         assertThrows(
                 ClassWasNotAnnotatedWithAnObject.class,
-                () -> DTODefinitionExtractor.extract(B.class));
+                () -> DTOMapper.extractDTODefinitionFor(B.class));
 
     }
 
     @Test
     public void shouldCreateDTODefinitionForClassesAnnotatedByDTOWithClassNameByDefault()
     {
-        var d = DTODefinitionExtractor.extract(DTOWith5PublicFields.class);
-        assertEquals("DTOWith5PublicFields",d.getName());
+        var d = DTOMapper.extractDTODefinitionFor(DTOWith2PublicFields.class);
+        assertEquals("DTOWith2PublicFields",d.getName());
     }
 
     @Test
     public void shouldOverrideDefinitionNameWithValuePassedToAnnotation()
     {
-        var d = DTODefinitionExtractor.extract(DTOWithOverriddenNameAndOverridenFieldName.class);
+        var d = DTOMapper.extractDTODefinitionFor(DTOWithOverriddenNameAndOverridenFieldName.class);
         assertEquals("NewName",d.getName());
     }
 
@@ -42,29 +46,26 @@ public class DTODefinitionUnitTests {
     {
         assertThrows(
                 DTOShouldHaveEmptyArgConstructor.class,
-                () -> DTODefinitionExtractor.extract(DTOWithoutEmptyConstructor.class));
+                () -> DTOMapper.extractDTODefinitionFor(DTOWithoutEmptyConstructor.class));
 
     }
 
     @Test
     public void dtoDefinitionShouldIncludeAllPublicFieldDefinitionsIgnoringRest()
     {
-        var od = DTODefinitionExtractor.extract(DTOWith5PublicFields.class);
+        var od = DTOMapper.extractDTODefinitionFor(DTOWith2PublicFields.class);
         var fieldDefinitions = od.allFieldDefinitions();
         Set<String> fieldDefNames = fieldDefinitions.stream()
                 .map(FieldDefinition::getName).collect(Collectors.toSet());
 
 
 
-        assertEquals(5,fieldDefinitions.size());
+        assertEquals(2,fieldDefinitions.size());
 
         assertEquals(
 
                 Set.of("aString",
-                        "anIntegerNumber",
-                        "aDecimalNumber",
-                        "aBoolean",
-                        "aCharacter"),
+                        "anIntegerNumber"),
 
                 fieldDefNames
         );

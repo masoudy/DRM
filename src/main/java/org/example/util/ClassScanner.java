@@ -1,4 +1,4 @@
-package org.example;
+package org.example.util;
 
 import com.google.common.reflect.ClassPath;
 
