@@ -1,2 +1,6 @@
-rootProject.name = 'MyORM'
 
+
+include ":DTOMapper"
+include ":JdbcDtoRM"
+
+rootProject.name = 'MyORM'
