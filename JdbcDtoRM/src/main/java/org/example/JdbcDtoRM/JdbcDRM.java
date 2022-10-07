@@ -311,13 +311,16 @@ public class JdbcDRM {
     {
         var connection = provider.provide();
         var statement = connection.createStatement();
-        var set = statement.executeQuery("select * from "+tableName+ " where "
-                +whereColumnKey
-                +"="
-                +(whereColumnValue instanceof String?"'":"")
-                +whereColumnValue
-                +(whereColumnValue instanceof String?"'":"")
-        );
+        String sql = "select * from " + tableName + " where "
+                + whereColumnKey
+                + "="
+                + (whereColumnValue instanceof String ? "'" : "")
+                + whereColumnValue
+                + (whereColumnValue instanceof String ? "'" : "");
+
+        System.out.println("\nSelect SQL:\n"+sql+"\n\n");
+
+        var set = statement.executeQuery(sql);
 
         var jsonArray = new JSONArray();
         while(set.next())

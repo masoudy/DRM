@@ -2,5 +2,6 @@
 
 include ":DTOMapper"
 include ":JdbcDtoRM"
+include ":RedisDRM"
 
 rootProject.name = 'MyORM'

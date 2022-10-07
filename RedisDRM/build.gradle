@@ -11,11 +11,15 @@ repositories {
 
 dependencies {
 
+    implementation group: 'redis.clients', name: 'jedis', version: '4.2.3'
+
     implementation group: 'org.json', name: 'json', version: '20220924'
     implementation project(":DTOMapper")
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
-    testImplementation('com.h2database:h2:2.1.214')
+
+    testImplementation group: 'com.github.fppt', name: 'jedis-mock', version: '1.0.4'
+
 
 }
 
